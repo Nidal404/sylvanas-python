@@ -1,29 +1,27 @@
 from abc import ABC, abstractmethod
-from typing import Generic, TypeVar, Optional
+from typing import Optional
 
 from sylvanas.Handler import Handler
 from sylvanas.database.Entity import Entity
 
-# Define a generic type for the entity
-T = TypeVar('T', bound=Entity)
 
-
-class UpsertHandler(Generic[T], Handler, ABC):
+class UpsertHandler(Handler, ABC):
 
     @abstractmethod
-    def createNewItem(self) -> T:
+    def createNewItem(self) -> Entity:
         raise NotImplementedError()
 
     @abstractmethod
-    def updateItem(self, item: T):
+    def updateItem(self, item: Entity):
         raise NotImplementedError()
 
     @abstractmethod
-    def getEntity(self, entityId: str) -> Optional[T]:
+    def getEntity(self, entityId: str) -> Optional[Entity]:
         raise NotImplementedError()
 
     def handle(self, **kwargs):
-        entity: T = self.getEntity(self.getAttribute('id'))
+        entity: Entity = self.getEntity(self.getAttribute('id', silent=False))
+
         if entity is None:
             entity = self.createNewItem()
             self.dbSession.add(entity)
