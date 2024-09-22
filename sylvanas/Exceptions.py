@@ -1,4 +1,4 @@
-from typing import Optional, Dict
+from typing import Optional, Dict, List
 
 from sylvanas.Enums import ExceptionLevel
 
@@ -14,10 +14,11 @@ class ApplicationException(SylvanasBaseException):
         self.level: ExceptionLevel = level
 
 
-class ArgumentException(SylvanasBaseException):
+class ArgumentException(SylvanasBaseException):  # JsonSchema validation
 
-    def __init__(self, message: str):
+    def __init__(self, message: str, errors: List):
         self.message: str = message
+        self.errors: List = errors
 
 
 """

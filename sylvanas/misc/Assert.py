@@ -28,11 +28,12 @@ class Assert(ABC):
         assert value is not None, f"\nExpected non-None value, but got None"
 
     @staticmethod
-    def raises(exception: type, callable: Callable, *args, **kwargs):
+    def hasRaise(exception: type, func: Callable, *args, msg: str = "", **kwargs):
         try:
-            callable(*args, **kwargs)
+            func(*args, **kwargs)
             raise AssertionError(f"Expected {exception.__name__} to be raised, but no exception was raised")
-        except exception:
-            pass
+        except exception as ex:
+            if msg and msg not in str(ex):
+                raise AssertionError(f"Expected exception message '{msg}', but got '{str(ex)}'")
         except Exception as e:
             raise AssertionError(f"Expected {exception.__name__} to be raised, but {type(e).__name__} was raised")
