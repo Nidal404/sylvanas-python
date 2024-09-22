@@ -14,7 +14,7 @@ pip -V (If you are running the virtual env. it'll show the path to the env.'s lo
 #### Générer un fichier propre requirements.txt
 ```
 pip install pipreqs
-pipreqs {sylvanas path} --force
+pipreqs C:\Users\Nidal\Dev\Projects\Sylvanas --force
 ```
 
 #### Installer / Désinstaller / Mettre à jour le package Auria
