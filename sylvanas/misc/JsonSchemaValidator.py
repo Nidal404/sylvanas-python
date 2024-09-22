@@ -18,7 +18,7 @@ class JsonSchemaValidator:
 
         # On rajoute quelques info
         # self.schema['$schema'] = "http://json-schema.org/schema#"
-        self.schema['additionalproperties'] = False
+        self.schema['additionalProperties'] = False
 
     def _trim(self):
         # Trim

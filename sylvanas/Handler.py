@@ -36,7 +36,7 @@ class Handler(ABC):
             raise TypeError('Schema format is not valid, dict expected')
 
         errors = JsonSchemaValidator(schema, body).validate()
-        if len(errors):
+        if len(errors) > 0:
             raise ArgumentException("Invalid json", errors)
 
     def getAttribute(self, key: str, silent: bool = True):
