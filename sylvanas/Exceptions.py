@@ -16,8 +16,7 @@ class ApplicationException(SylvanasBaseException):
 
 class ArgumentException(SylvanasBaseException):  # JsonSchema validation
 
-    def __init__(self, message: str, errors: List):
-        self.message: str = message
+    def __init__(self, errors: List):
         self.errors: List = errors
 
 

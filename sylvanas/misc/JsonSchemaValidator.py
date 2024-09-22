@@ -2,16 +2,17 @@ from typing import Union, Dict, List
 
 from jsonschema.validators import Draft7Validator
 
+from sylvanas.Enums import ExceptionLevel
 from sylvanas.Exceptions import ArgumentException, ApplicationException
 
 
 class JsonSchemaValidator:
     def __init__(self, schema: Dict, json: Union[Dict, List]):
         if not isinstance(json, dict) and not isinstance(json, list):
-            raise ArgumentException('Invalid JSON', ['JSON can\'t be empty'])
+            raise ArgumentException(['JSON can\'t be empty'])
 
         if not isinstance(schema, dict):
-            raise ApplicationException("Schema is not valid")
+            raise ApplicationException("Schema is not valid", ExceptionLevel.ERROR)
 
         self.schema: Dict = schema
         self.json: Union[Dict, List] = json
