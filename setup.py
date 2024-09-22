@@ -7,7 +7,7 @@ setup(
     description='Coucou',
     packages=find_packages(),
     install_requires=[
-        "cryptography==43.0.1"
+        "cryptography==3.4.0"
         "jsonschema==4.23.0"
         "PyMySQL==1.1.1"
         "pytest==8.3.3"
