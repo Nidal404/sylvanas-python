@@ -1,3 +1,5 @@
+from abc import ABC, abstractmethod
+
 from sqlalchemy import Integer, String, Boolean
 from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
 
@@ -20,3 +22,11 @@ class Entity(DeclarativeBase):
 class DeletableEntity:
     is_deleted: Mapped[bool] = mapped_column(Boolean(), nullable=False, default=False)
     deleted_datetime: Mapped[int] = mapped_column(Integer(), nullable=False, default=DateUtils.UtcNow())
+
+
+class EntityFactory(ABC):
+
+    @staticmethod
+    @abstractmethod
+    def create(**kwargs) -> Entity:
+        raise NotImplementedError()
