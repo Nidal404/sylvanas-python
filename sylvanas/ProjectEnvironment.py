@@ -3,7 +3,7 @@ from abc import ABC
 from typing import Dict, Type
 
 from sylvanas.Enums import ProjectEnvironmentType
-from sylvanas.Exceptions import ArgumentException
+from sylvanas.Exceptions import ArgumentException, SylvanasBaseException, ApplicationException
 from sylvanas.Utils.TextFormatUtils import TextFormatUtils
 
 ENVIRONMENT_CACHE: Dict[str, str] = {}
@@ -44,7 +44,7 @@ class ProjectEnvironment:
     @staticmethod
     def getEnvVar(expectedType: Type, key: str):
         if key not in ENVIRONMENT_CACHE:
-            raise ArgumentException(f'{key} environment key not found')
+            raise ApplicationException(f'{key} environment key not found')
 
         value = ENVIRONMENT_CACHE[key]
 

@@ -37,7 +37,7 @@ class Handler(ABC):
 
         errors = JsonSchemaValidator(schema, body).validate()
         if len(errors) > 0:
-            raise ArgumentException("Invalid json", errors)
+            raise ArgumentException(errors)
 
     def getAttribute(self, key: str, silent: bool = True):
         if key not in self.body and not silent:
