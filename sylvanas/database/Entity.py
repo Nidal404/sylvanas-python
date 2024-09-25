@@ -21,7 +21,7 @@ class Entity(DeclarativeBase):
 
 class DeletableEntity:
     is_deleted: Mapped[bool] = mapped_column(Boolean(), nullable=False, default=False)
-    deleted_datetime: Mapped[int] = mapped_column(Integer(), nullable=False, default=DateUtils.UtcNow())
+    deleted_datetime: Mapped[int] = mapped_column(Integer(), nullable=True)
 
 
 class EntityFactory(ABC):
