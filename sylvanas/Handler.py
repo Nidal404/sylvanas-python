@@ -8,7 +8,17 @@ from sylvanas.Utils.DateUtils import DateUtils
 from sylvanas.misc.JsonSchemaValidator import JsonSchemaValidator
 
 
-class Handler(ABC):
+class HandlerBase(ABC):
+
+    def __init__(self, dbSession: Session):
+        if not isinstance(dbSession, Session):
+            raise TypeError('DbSession must be type of Session')
+
+        self.dbSession = dbSession
+        self.now = DateUtils.UtcNow()
+
+
+class Handler(HandlerBase, ABC):
 
     @abstractmethod
     def defineSchema(self):
@@ -19,16 +29,13 @@ class Handler(ABC):
         raise NotImplementedError()
 
     def __init__(self, dbSession: Session, body: Dict):
-        if not isinstance(dbSession, Session):
-            raise TypeError('DbSession must be type of Session')
+        super().__init__(dbSession)
+
         if not isinstance(body, dict):
             raise TypeError('Body format is not valid, dict expected')
 
         self.validateSchema(body)  # Will raise
-
-        self.dbSession = dbSession
         self.body: Dict = body
-        self.now = DateUtils.UtcNow()
 
     def validateSchema(self, body: Dict):
         schema = self.defineSchema()
