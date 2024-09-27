@@ -1,6 +1,6 @@
 from enum import Enum
 
-from sylvanas.misc.ExtendedIntEnum import ExtendedIntEnum
+from sylvanas.misc.ExtendedEnum import ExtendedIntEnum
 
 
 class DateFormat(Enum):
