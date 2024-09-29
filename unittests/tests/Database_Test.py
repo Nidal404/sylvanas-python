@@ -1,20 +1,11 @@
-from sqlalchemy import String
-from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy_utils import database_exists
 
 from sylvanas.ProjectEnvironment import ProjectEnvironment as Env, ProjectEnvironment
 from sylvanas.database.Database import Database, dbSessionScope
 from sylvanas.database.DatabaseCommand import DatabaseCommand
-from sylvanas.database.Entity import Entity, DeletableEntity
+from sylvanas.database.Entities import Setting
 from sylvanas.misc.Assert import Assert
 from sylvanas.misc.Guid import Guid
-
-
-class Setting(Entity, DeletableEntity):
-    __tablename__ = "settings"
-
-    description: Mapped[str] = mapped_column(String(150), nullable=False)
-    value: Mapped[str] = mapped_column(String(255), nullable=False)
 
 
 class TestDatabase:
@@ -48,12 +39,6 @@ class TestDatabase:
             setting.value = str(1)
             setting.is_deleted = True
             dbSession.add(setting)
-
-        # Nouvelle entrée
-        with (dbSessionScope(database.openDbSession()) as dbSession):
-            setting: Setting = dbSession.query(Setting).get(settingId)
-            Assert.isNotNone(setting)
-            Assert.isTrue(setting.is_deleted)
 
         # On supprime la db
         DatabaseCommand(databaseName, Env.getDatabaseUsername()).dropDb()

@@ -24,5 +24,5 @@ def pytest_sessionstart(session):  # before session.main() is called
     if recreateDb:
         DatabaseCommand(ProjectEnvironment.getDatabaseName(), ProjectEnvironment.getDatabaseUsername()).dropDb()
 
-        import sylvanas.database.Entities
+        import sylvanas.database.Entities  # Ne pas supprimer
         Database(engine).create(raiseIfExists=False).createTables(drop=True)

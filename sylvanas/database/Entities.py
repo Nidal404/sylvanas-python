@@ -4,6 +4,13 @@ from sqlalchemy.orm import Mapped, mapped_column
 from sylvanas.database.Entity import Entity
 
 
+class Setting(Entity):
+    __tablename__ = "settings"
+
+    description: Mapped[str] = mapped_column(String(150), nullable=False)
+    value: Mapped[str] = mapped_column(String(255), nullable=False)
+
+
 class HandlerLog(Entity):
     __tablename__ = 'handlers_logs'
 
