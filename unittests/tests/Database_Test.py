@@ -30,7 +30,7 @@ class TestDatabase:
         )
 
         print(f'\n{engineUrl}')
-        engine = Database.createEngine(engineUrl, echo=Env.traceDatabaseQueries())
+        engine = Database.createEngine(engineUrl, echo=Env.isDatabaseQueriesTraceEnable())
 
         database = Database(engine) \
             .create(raiseIfExists=False) \

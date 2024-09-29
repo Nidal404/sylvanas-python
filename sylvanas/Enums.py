@@ -30,5 +30,9 @@ class MobilePlatformType(ExtendedIntEnum):
 
 class ExceptionLevel(ExtendedIntEnum):
     INFO = 2
-    WARNING = 5
     ERROR = 10
+
+class HandlerLoggerSeverityLevel(ExtendedIntEnum):
+    INFO = 5
+    WARNING = 10
+    ERROR = 15

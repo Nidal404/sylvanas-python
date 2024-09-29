@@ -23,15 +23,12 @@ class CustomCommandHandler(Handler):
 class TestHandler(BaseTest):
 
     def test_Handler(self):
-        Assert.hasRaise(TypeError, CustomCommandHandler, None, {},
-                        msg='DbSession must be type of Session')
-        Assert.hasRaise(TypeError, CustomCommandHandler, self.dbSession, None,
-                        msg='Body format is not valid, dict expected')
-        Assert.hasRaise(ArgumentException, CustomCommandHandler, self.dbSession, {},
-                        msg="'user_id' is a required property")
+        Assert.hasRaise(TypeError, CustomCommandHandler, None, {}, msg='DbSession must be type of Session')
+        Assert.hasRaise(TypeError, CustomCommandHandler, self.dbSession, None, msg='Body format is not valid, dict expected')
+        Assert.hasRaise(ArgumentException, CustomCommandHandler, self.dbSession, {}, msg="'user_id' is a required property")
 
     def test_Schema(self):
         userId = Guid.new()
         h = CustomCommandHandler(self.dbSession, {'user_id': userId})
 
-        Assert.areEqual(h.getUserId(), userId)
+        Assert.areEqual(h.getAttribute('user_id'), userId)

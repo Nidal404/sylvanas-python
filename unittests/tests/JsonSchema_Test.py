@@ -19,6 +19,6 @@ class TestJsonSchema:
             'id': Guid.new(),
             'trimable_str': ' trimeuxmoi     ',
         }
-
+        # Todo à completer
         results = JsonSchemaValidator(self.schema, body).validate()
         Assert.areEqual('trimeuxmoi', body['trimable_str'])

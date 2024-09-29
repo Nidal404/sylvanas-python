@@ -4,7 +4,7 @@ from typing import Dict, Type
 
 from sylvanas.Enums import ProjectEnvironmentType
 from sylvanas.Exceptions import ArgumentException, SylvanasBaseException, ApplicationException
-from sylvanas.Utils.TextFormatUtils import TextFormatUtils
+from sylvanas.utils.TextFormatUtils import TextFormatUtils
 
 ENVIRONMENT_CACHE: Dict[str, str] = {}
 
@@ -83,7 +83,7 @@ class ProjectEnvironment:
     ######################
 
     @staticmethod
-    def traceDatabaseQueries() -> bool:
+    def isDatabaseQueriesTraceEnable() -> bool:
         return ProjectEnvironment.getEnvVar(bool, ProjectEnvironmentKey.DB_ECHO)
 
     @staticmethod

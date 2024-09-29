@@ -9,7 +9,7 @@ class SylvanasBaseException(Exception):
 
 class ApplicationException(SylvanasBaseException):
 
-    def __init__(self, message: str, level: ExceptionLevel):
+    def __init__(self, message: str, level: ExceptionLevel = ExceptionLevel.ERROR):
         self.message: str = message
         self.level: ExceptionLevel = level
 
@@ -20,6 +20,12 @@ class ArgumentException(SylvanasBaseException):  # JsonSchema validation
         self.errors: List = errors
 
 
+class DevException(SylvanasBaseException):  # Message pour moi même si je sais pas use une class
+
+    def __init__(self, message: str):
+        self.message: str = message
+
+
 """
 Exceptions liées aux clients
 """
@@ -28,7 +34,7 @@ Exceptions liées aux clients
 class ApiException(SylvanasBaseException):
     """Exception à traiter coté client"""
 
-    def __init__(self, code: int, message: str, data=None):
+    def __init__(self, code: int, message: str, data: Optional[Dict] = None):
         self.code: int = code
         self.message: str = message
         self.data: Optional[Dict] = data

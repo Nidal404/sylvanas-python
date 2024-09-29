@@ -1,4 +1,4 @@
-from sylvanas.Utils.SubProcessUtils import SubProcessUtils
+from sylvanas.utils.SubProcessUtils import SubProcessUtils
 
 
 class DatabaseCommand:

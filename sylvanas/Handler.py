@@ -4,8 +4,9 @@ from typing import Dict
 from sqlalchemy.orm import Session
 
 from sylvanas.Exceptions import ArgumentException
-from sylvanas.Utils.DateUtils import DateUtils
+from sylvanas.HandlerLogger import HandlerLogger
 from sylvanas.misc.JsonSchemaValidator import JsonSchemaValidator
+from sylvanas.utils.DateUtils import DateUtils
 
 
 class HandlerBase(ABC):
@@ -36,6 +37,7 @@ class Handler(HandlerBase, ABC):
 
         self.validateSchema(body)  # Will raise
         self.body: Dict = body
+        self.logger = HandlerLogger(self.dbSession, self.__class__.__name__, body)
 
     def validateSchema(self, body: Dict):
         schema = self.defineSchema()
@@ -51,5 +53,9 @@ class Handler(HandlerBase, ABC):
             raise AttributeError(f'{key} not found')
         return self.body.get(key)
 
-    def getUserId(self) -> str:
-        return self.getAttribute('user_id')
+
+class QueryHandler(Handler, ABC):
+
+    def __init__(self, dbSession: Session, body: Dict):
+        super().__init__(dbSession, body)
+        self.response: Dict = {}
