@@ -29,6 +29,9 @@ class Handler(HandlerBase, ABC):
     def handle(self, **kwargs):
         raise NotImplementedError()
 
+    def response(self, **kwargs):
+        pass
+
     def __init__(self, dbSession: Session, body: Dict):
         super().__init__(dbSession)
 
@@ -52,10 +55,3 @@ class Handler(HandlerBase, ABC):
         if key not in self.body and not silent:
             raise AttributeError(f'{key} not found')
         return self.body.get(key)
-
-
-class QueryHandler(Handler, ABC):
-
-    def __init__(self, dbSession: Session, body: Dict):
-        super().__init__(dbSession, body)
-        self.response: Dict = {}

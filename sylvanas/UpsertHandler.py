@@ -8,11 +8,11 @@ from sylvanas.database.Entity import Entity
 class UpsertHandler(Handler, ABC):
 
     @abstractmethod
-    def createNewItem(self) -> Entity:
+    def addNewEntity(self) -> Entity:
         raise NotImplementedError()
 
     @abstractmethod
-    def updateItem(self, item: Entity):
+    def updateEntity(self, item: Entity):
         raise NotImplementedError()
 
     @abstractmethod
@@ -23,7 +23,7 @@ class UpsertHandler(Handler, ABC):
         entity: Entity = self.getEntity(self.getAttribute('id', silent=False))
 
         if entity is None:
-            entity = self.createNewItem()
+            entity = self.addNewEntity()
             self.dbSession.add(entity)
         else:
-            self.updateItem(entity)
+            self.updateEntity(entity)

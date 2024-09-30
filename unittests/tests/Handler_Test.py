@@ -19,6 +19,9 @@ class CustomCommandHandler(Handler):
     def handle(self, **kwargs):
         print('\ncoucou')
 
+    def response(self, **kwargs) -> str:
+        return ''
+
 
 class TestHandler(BaseTest):
 
