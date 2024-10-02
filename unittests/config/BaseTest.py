@@ -19,6 +19,12 @@ class BaseTest(ABC):
             self._dbSession = Database(self._engine).openDbSession()  # Create the session
         return self._dbSession
 
+    def refreshSession(self) -> Session:
+        if self._dbSession is not None:
+            self._dbSession.close()
+            self._dbSession = None
+        return self.dbSession
+
     def setup_method(self):
         self.clear_database()  # Clear the database before each test
 
@@ -39,11 +45,11 @@ class BaseTest(ABC):
 class HandlerBaseTest(BaseTest, ABC):
     HANDLER = None
 
-    def runHandler(self, body: Dict) -> Handler:
+    def runHandler(self, body: Dict, **kwargs) -> Handler:
         if self.HANDLER is None:
             raise ValueError('You must set the HANDLER variable.')
 
         with (dbSessionScope(Database(self._engine).openDbSession()) as dbSession):
             handler = self.HANDLER(dbSession, body)
-            handler.handle()
+            handler.handle(**kwargs)
             return handler

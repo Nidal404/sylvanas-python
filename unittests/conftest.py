@@ -1,8 +1,9 @@
 import os
+from time import sleep
 
 from sylvanas.Enums import ProjectEnvironmentType
 from sylvanas.ProjectEnvironment import ProjectEnvironmentKey, ProjectEnvironment
-from sylvanas.database.Database import dbSessionScope, Database
+from sylvanas.database.Database import Database
 from sylvanas.database.DatabaseCommand import DatabaseCommand
 
 os.environ[ProjectEnvironmentKey.ENVIRONMENT] = ProjectEnvironmentType.TEST.value
@@ -22,7 +23,9 @@ def pytest_sessionstart(session):  # before session.main() is called
 
     # Create de la base de données
     if recreateDb:
+        import sylvanas.database.Entities
+        import unittests.config.TestEntities
         DatabaseCommand(ProjectEnvironment.getDatabaseName(), ProjectEnvironment.getDatabaseUsername()).dropDb()
+        sleep(2)
 
-        import sylvanas.database.Entities  # Ne pas supprimer
         Database(engine).create(raiseIfExists=False).createTables(drop=True)
