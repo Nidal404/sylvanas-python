@@ -1,6 +1,9 @@
+from jsonschema.exceptions import ValidationError
+
 from sylvanas.misc.Assert import Assert
 from sylvanas.misc.Guid import Guid
 from sylvanas.misc.JsonSchemaValidator import JsonSchemaValidator
+from sylvanas.utils.RandomUtils import RandomUtils
 
 
 class TestJsonSchema:
@@ -15,10 +18,19 @@ class TestJsonSchema:
     }
 
     def test_SchemaValidation(self):
-        body = {
-            'id': Guid.new(),
-            'trimable_str': ' trimeuxmoi     ',
-        }
-        # Todo à completer
-        results = JsonSchemaValidator(self.schema, body).validate()
-        Assert.areEqual('trimeuxmoi', body['trimable_str'])
+        def AssertTrim():
+            body = {
+                'id': Guid.new(),
+                'trimable_str': ' trimeuxmoi     ',
+            }
+
+            JsonSchemaValidator(self.schema, body).validate()
+            Assert.areEqual('trimeuxmoi', body['trimable_str'])
+
+        def AssertId():
+            results = JsonSchemaValidator(self.schema, {'id': RandomUtils.generateString(size=36)}).validate()
+            Assert.areEqual(1, len(results))
+            Assert.mustContains('is not a valid Guid', results[0])
+
+        AssertTrim()
+        AssertId()

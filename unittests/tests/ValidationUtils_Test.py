@@ -1,9 +1,9 @@
 import uuid
 
+from sylvanas.misc.Assert import Assert
 from sylvanas.misc.Guid import Guid
 from sylvanas.utils.RandomUtils import RandomUtils
 from sylvanas.utils.ValidationUtils import ValidationUtils
-from sylvanas.misc.Assert import Assert
 
 
 class TestValidationUtils:
@@ -15,7 +15,6 @@ class TestValidationUtils:
         Assert.isFalse(ValidationUtils.isGuidValid(RandomUtils.generateString(size=36)))
         Assert.isFalse(ValidationUtils.isGuidValid(uuid.UUID(int=0)))
         Assert.isTrue(ValidationUtils.isGuidValid(Guid.new()))
-
 
     def test_isEmailValid(self):
         Assert.isTrue(ValidationUtils.isEmailValid('marci@polo.fr'))

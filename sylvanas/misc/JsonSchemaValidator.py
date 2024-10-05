@@ -1,9 +1,11 @@
 from typing import Union, Dict, List
 
+from jsonschema.exceptions import ValidationError
 from jsonschema.validators import Draft7Validator
 
 from sylvanas.Enums import ExceptionLevel
 from sylvanas.Exceptions import ArgumentException, ApplicationException
+from sylvanas.utils.ValidationUtils import ValidationUtils
 
 
 class JsonSchemaValidator:
@@ -34,4 +36,8 @@ class JsonSchemaValidator:
 
         v = Draft7Validator(self.schema)
         errors = list(v.iter_errors(self.json))  # Liste de ValidationError
+
+        if 'id' in self.json and not ValidationUtils.isGuidValid(self.json['id']):
+            errors.append(ValidationError(f'Id {self.json['id']}, is not a valid Guid'))
+
         return [error.message for error in errors]
