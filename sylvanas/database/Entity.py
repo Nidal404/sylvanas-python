@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, String, Boolean
+from sqlalchemy import Integer, String, Boolean, CHAR
 from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
 
 from sylvanas.utils.DateUtils import DateUtils
@@ -13,7 +13,7 @@ class Entity(DeclarativeBase):
         'mysql_collate': MYSQL_COLLATE
     }
 
-    id: Mapped[str] = mapped_column(String(36), primary_key=True)
+    id: Mapped[str] = mapped_column(CHAR(36), primary_key=True)
     created_datetime: Mapped[int] = mapped_column(Integer(), nullable=False, default=DateUtils.UtcNow())
 
 
