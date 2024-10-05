@@ -31,7 +31,7 @@ Exceptions liées aux clients
 """
 
 
-class ApiException(SylvanasBaseException):
+class ClientException(SylvanasBaseException):
     """Exception à traiter coté client"""
 
     def __init__(self, code: int, message: str, data: Optional[Dict] = None):
