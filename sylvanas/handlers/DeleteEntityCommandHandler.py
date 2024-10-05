@@ -26,15 +26,16 @@ class DeleteEntityCommandHandler(Handler):
         if not issubclass(model_class, DeletableEntity):
             raise DevException("Model class must be a subclass of DeletableEntity")
 
-        entity: Entity = self.dbSession \
-            .query(model_class) \
-            .where(model_class.id == self.getAttribute('id')) \
-            .one_or_none()
+        entity: Entity = self.getEntity(model_class)
 
-        if entity is None:
+        if entity is None or entity.is_deleted:
             raise ApplicationException(f'{model_class} with id {self.getAttribute('id')} not found')
-        if entity.is_deleted:
-            return
 
         entity.is_deleted = True
         entity.deleted_datetime = DateUtils.UtcNow()
+
+    def getEntity(self, model_class) -> Entity:
+        return self.dbSession \
+            .query(model_class) \
+            .where(model_class.id == self.getAttribute('id')) \
+            .one_or_none()
