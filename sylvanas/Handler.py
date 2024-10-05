@@ -55,3 +55,6 @@ class Handler(HandlerBase, ABC):
         if key not in self.body and not silent:
             raise AttributeError(f'{key} not found')
         return self.body.get(key)
+
+    def isAttributeExists(self, key: str) -> bool:
+        return key in self.body

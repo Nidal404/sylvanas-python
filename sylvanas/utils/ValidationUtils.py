@@ -1,9 +1,18 @@
 import re
+import uuid
 from abc import ABC
 from typing import Optional
 
 
 class ValidationUtils(ABC):
+
+    @staticmethod
+    def isGuidValid(value):
+        try:
+            guid = uuid.UUID(str(value))
+            return guid != uuid.UUID(int=0)  # Ensure it is not an empty GUID
+        except ValueError:
+            return False
 
     @staticmethod
     def isEmailValid(email: str) -> bool:
